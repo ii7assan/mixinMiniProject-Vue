@@ -1,9 +1,14 @@
 <template>
   <div>
-    <v-btn @click="clicked(msg)" color="red" block class="my-3" dark
+    <v-btn @click="clicked()" color="red" block class="my-3" dark
       >toggle alert</v-btn
     >
-    <alert :color="color" :msg="msg" :alert="alert" />
+    <alert
+      :color="alertColor"
+      :msg="message"
+      :alertborder="borders"
+      :alert="alert"
+    />
   </div>
 </template>
 
@@ -12,8 +17,10 @@ import alertMixin from "../mixins/alertMixin";
 import alert from "./alert.vue";
 export default {
   components: { alert },
-  data() {
-    return {};
+  props: {
+    alertColor: String,
+    message: String,
+    borders: String,
   },
   mixins: [alertMixin],
 };

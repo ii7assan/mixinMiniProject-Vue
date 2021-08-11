@@ -7,56 +7,61 @@
       lazy-validation
     >
       <v-text-field
-        v-model="msg"
+        v-model="form_msg"
         label="alert message"
         required
         clearable
         solo
       ></v-text-field>
-      <!-- <v-text-field
-        v-model="errorMsg"
-        label="test2"
-        :counter="20"
-        :rules="errorRules"
-        required
-        clearable
-        solo
-      ></v-text-field> -->
       <v-select
-        v-model="color"
-        :items="items"
-        :rules="[(v) => !!v || 'Item is required']"
+        v-model="selectedColor"
+        :items="alertColor"
+        :rules="[(v) => !!v || 'Color is required']"
         label="alert color"
         required
         solo
       ></v-select>
-      <btn-1 />
+      <v-select
+        v-model="selectedBorder"
+        :items="alertBorder"
+        :rules="[(v) => !!v || 'border is required']"
+        label="alert border"
+        required
+        solo
+      ></v-select>
+      <btn-1
+        :alertColor="selectedColor"
+        :message="form_msg"
+        :borders="selectedBorder"
+        :alertBorders="selectedBorder"
+      />
     </v-form>
   </div>
 </template>
 
 <script>
 import Btn1 from "../components/btn1.vue";
-import alertMixin from "../mixins/alertMixin";
 export default {
   components: {
     Btn1,
   },
   data: () => ({
     valid: true,
-    // nameRules: [
-    //   (v) => !!v || "Name is required",
-    //   (v) => v.length <= 30 || "Name must be less than 10 characters",
-    // ],
+    form_msg: "",
+    nameRules: [
+      (v) => !!v || "Name is required",
+      (v) => v.length <= 30 || "Name must be less than 10 characters",
+    ],
     errorMsg: "",
     errorRules: [
       (v) => !!v || "error field is required",
       (v) => v.length <= 20 || "Name must be less than 10 characters",
     ],
-    select: null,
-    items: ["red", "warning", "error"],
+    selectedColor: null,
+    alertColor: ["success", "warning", "error", "info"],
+    alertBorder: ["left", "right", "top", "bottom"],
+    selectedBorder: null,
   }),
-  mixins: [alertMixin],
   methods: {
     validate() {
       this.$refs.alert.validate();
